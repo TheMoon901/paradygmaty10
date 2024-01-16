@@ -7,7 +7,7 @@ public interface Singleton {
                 removeAnotherSingleton(((ComplexItem)list.get(i)).getChildren());
             }
 
-            if(list.get(i) instanceof Singleton) {
+            if(list.get(i) instanceof Singleton && !((Singleton)list.get(i)).equals(this)) {
                 list.remove(i);
             }
         }

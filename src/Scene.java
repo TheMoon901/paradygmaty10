@@ -18,6 +18,16 @@ private Panel p;
     }
 
     public void addItem(Item item) {
+        if(item instanceof Singleton) {
+            ((Singleton)item).removeAnotherSingleton(items);
+        }
+
+        if(item instanceof ComplexItem) {
+            Singleton s = ((ComplexItem) item).getSingleton();
+            if(s != null) {
+                s.removeAnotherSingleton(items);
+            }
+        }
         items.add(item);
     }
 
