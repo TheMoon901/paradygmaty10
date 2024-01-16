@@ -15,6 +15,7 @@ public class Main {
         scene.addItem(s);
       //  TimeUnit.SECONDS.sleep(1);
         scene.draw(); */
+        //changes check
         UI.mainLoop();
     }
 }

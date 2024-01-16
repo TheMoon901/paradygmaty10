@@ -11,6 +11,17 @@ public class ComplexItem extends Item{
     }
 
     void addItem(Item item) {
+        if(item instanceof Singleton) {
+            ((Singleton)item).removeAnotherSingleton(items);
+        }
+
+        if(item instanceof ComplexItem) {
+            Singleton s = ((ComplexItem) item).getSingleton();
+            if(s != null) {
+                s.removeAnotherSingleton(items);
+            }
+        }
+
         item.translate(position);
         items.add(item);
         if(item.getBoundingBox().y.getX() > this.endPosition.getX()) {
@@ -37,6 +48,16 @@ public class ComplexItem extends Item{
         for(int i = 0; i < items.size(); i++) {
             items.get(i).translate(p);
         }
+    }
+
+    public Singleton getSingleton() {
+        for (int i = 0; i < items.size(); i++) {
+            if(items.get(i) instanceof Singleton) {
+                return (Singleton) items.get(i);
+            }
+        }
+
+        return null;
     }
 
     @Override
