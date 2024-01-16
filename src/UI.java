@@ -5,10 +5,11 @@ import java.util.Scanner;
 public class UI {
     public static void mainLoop() {
         Scene scene = new Scene();
+        scene.setSelectedObject(null);
         Scanner scanner = new Scanner(System.in);
         boolean looping = true;
         while (looping) {
-            System.out.println("Type command (add/translate/draw/bounds/exit):");
+            System.out.println("Type command (add/translate/draw/bounds/select/exit):");
             String command = scanner.nextLine();
 
             switch (command) {
@@ -24,6 +25,9 @@ public class UI {
                     break;
                 case "translate":
                     translate(scanner, scene);
+                    break;
+                case "select":
+                    select(scanner, scene);
                     break;
                 case "exit":
                     looping = false;
@@ -72,6 +76,25 @@ public class UI {
         Item item = items.get(answer);
 
         item.translate(askPosition(scanner, "translation"));
+    }
+
+    private static void select(Scanner scanner, Scene scene) {
+        System.out.println("Choose item (number) to select: ");
+        ArrayList<Item> items = scene.getItems();
+        for(int i = 0; i < items.size(); i++) {
+            System.out.println(i + ") " + items.get(i).getName());
+        }
+
+        int answer = scanner.nextInt();
+        scanner.nextLine();
+
+        if(answer >= items.size() || answer < 0) {
+            System.out.println("Index out of bounds!");
+            return;
+        }
+
+        Item item = items.get(answer);
+        scene.setSelectedObject(item);
     }
 
 

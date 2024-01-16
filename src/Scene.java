@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Scene extends JFrame {
 private ArrayList<Item> items;
+private BoundingBoxDecorator selectedObject;
 private boolean drawBounds;
-
 
 private Panel p;
     public Scene() {
@@ -38,5 +38,30 @@ private Panel p;
 
     public void setDrawBounds(boolean b) {
         drawBounds = b;
+    }
+
+    public void setSelectedObject(Item item) {
+        if(item == null) {
+            selectedObject = null;
+            return;
+        }
+
+        BoundingBoxDecorator bd = new BoundingBoxDecorator(item);
+
+        if(selectedObject != null) {
+
+            if(item.equals(selectedObject.unwrap())) {
+                System.out.println("Object already selected!");
+                return;
+            }
+
+            Item unwrapped = selectedObject.unwrap();
+            items.remove(selectedObject);
+            items.add(unwrapped);
+        }
+
+        items.remove(item);
+        items.add(bd);
+        selectedObject = bd;
     }
 }
